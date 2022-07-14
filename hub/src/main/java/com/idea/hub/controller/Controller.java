@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.redisson.api.RQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.idea.hub.common.UserConstant;
+import com.idea.hub.dto.UserRegisterationDto;
 import com.idea.hub.model.AuthenticationRequest;
 import com.idea.hub.model.AuthenticationResponse;
 import com.idea.hub.model.ChangePass;
@@ -36,6 +38,7 @@ import com.idea.hub.model.UserTokens;
 import com.idea.hub.repository.TokenRepository;
 import com.idea.hub.repository.UserRepository;
 import com.idea.hub.security.MyUserDetailService;
+import com.idea.hub.service.UserServices;
 import com.idea.hub.util.JwtUtil;
 
 @RestController
@@ -54,8 +57,12 @@ public class Controller {
 	private MyUserDetailService userDetailService;
 	
 	@Autowired
+	private UserServices services;
+	
+	@Autowired
 	private JwtUtil jwtTokenUtil;
 	
+
 	
 	@GetMapping("/testApi")
 	public String testApi() {
@@ -101,13 +108,14 @@ public class Controller {
 	
 	//########################     Singup or create new Acount      ######################################
 	@PostMapping("/register")
-	public ResponseEntity<?> createUser(@RequestBody User user)
+	public ResponseEntity<?> createUser(@RequestBody UserRegisterationDto user)
 	{
+//		RQueue<User> testQueue;
 		User u=null;
 		//String encryptPwd = passwordEncoder.encode(user.getPassword());
 		//user.setPassword(encryptPwd);
 		try {
-				u=this.userRepository.save(user);
+				u=this.services.save(user);
 				UserTokens userTokens = new UserTokens(user.getEmail(),"");
 				this.tokenRepository.save(userTokens);
 				return ResponseEntity.of(Optional.of(u));
