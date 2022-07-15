@@ -143,7 +143,7 @@ public class Controller {
 	        		this.services.save(user);
 	        		UserTokens userTokens = new UserTokens(user.getEmail(),"");
 	        		this.tokenRepository.save(userTokens);
-	        		errorDtos = setErrorData(APPServiceCode.NP_SERVICE_001, errorDtos);
+	        		errorDtos = setErrorData(APPServiceCode.APP_SERVICE_001, errorDtos);
 	        	}catch(Exception e) {
 	        		LOGGER.info(e);
 	        	}
@@ -157,8 +157,8 @@ public class Controller {
         }
 		else
         {
-            ResponseDto resDto = new ResponseDto( APPServiceCode.NP_SERVICE_001
-                    .getStatusCode(),  APPServiceCode.NP_SERVICE_001.getStatusDesc());
+            ResponseDto resDto = new ResponseDto( APPServiceCode.APP_SERVICE_001
+                    .getStatusCode(),  APPServiceCode.APP_SERVICE_001.getStatusDesc());
             responseModel.setData( resDto );
             LOGGER.info( "saveSurveyData :: response :: success :: "
                     +" :: "+ serviceCode );

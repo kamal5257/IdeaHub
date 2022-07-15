@@ -16,14 +16,14 @@ public class Validation {
 		
 		if(StringUtils.isValidObj(registerationDto)) {
 			if(!validationUtil.isEmailValid(registerationDto.getEmail())) {
-				return APPServiceCode.NP_SERVICE_009;
+				return APPServiceCode.APP_SERVICE_009;
 			}
 			if(!validationUtil.isNameValid(registerationDto.getName())) {
-				return APPServiceCode.NP_SERVICE_010;
+				return APPServiceCode.APP_SERVICE_010;
 			}
 		}
 		else {
-			return APPServiceCode.NP_SERVICE_997;
+			return APPServiceCode.APP_SERVICE_997;
 		}
 		return null;
 	}
