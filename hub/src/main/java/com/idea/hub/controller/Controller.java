@@ -41,6 +41,7 @@ import com.idea.hub.model.ChangePass;
 import com.idea.hub.model.EditUser;
 import com.idea.hub.model.User;
 import com.idea.hub.model.UserTokens;
+import com.idea.hub.notify.SendEmail;
 import com.idea.hub.repository.TokenRepository;
 import com.idea.hub.repository.UserRepository;
 import com.idea.hub.security.MyUserDetailService;
@@ -74,9 +75,13 @@ public class Controller {
 	
 	@Autowired
 	private Validation validation;
+	
+	@Autowired
+	private SendEmail sendEmail;
 
 	@GetMapping("/testApi")
 	public String testApi() {
+		sendEmail.mailSend("kamal.chadha162@gmail.com", "JAVA MAIL", "<h1>HELLLO </h1>");
 		return "successfully created first API";
 	}
 
