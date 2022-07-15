@@ -1,14 +1,10 @@
 package com.idea.hub.service;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.redisson.api.RQueue;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.idea.hub.dto.UserRegisterationDto;
@@ -16,26 +12,30 @@ import com.idea.hub.model.User;
 import com.idea.hub.repository.UserRepository;
 
 @Service
-public class UserServices implements Serializable{
+public class UserServices{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
 	@Autowired
 	private UserRepository userRepository;
-	
-//	@Autowired
+//	private RMap<String, UserRegisterationDto> testMap;
+//	private RQueue<UserRegisterationDto> testQueue;
+//	
 //	private RedissonClient client;
-	
-	
+//	
+//	
 //	public UserServices (RedissonClient client) {
 //		this.client = client;
+//		testMap = client.getMap("testMap");
+//		testQueue = client.getQueue("testQueue");
+//	}
+//	
+//	public UserServices () {
+//		super();
 //	}
 	
-	@Autowired
-	private RedisTemplate<String, UserRegisterationDto> redisTemplate;
+	
+//	@Autowired
+//	private RedisTemplate<String, UserRegisterationDto> redisTemplate;
 	
 	public List<User> getAllUsers(){
 		List<User> users = new ArrayList<>();
@@ -54,10 +54,16 @@ public class UserServices implements Serializable{
 				registerationDto.getMobile(),
 				registerationDto.getRoles());
 		
-		try {
-			redisTemplate.opsForHash().put("testQueue", registerationDto.getMobile(), registerationDto);
-			System.out.println("$$$$$$$$$ "+redisTemplate.opsForHash().values("abc"));
-		}catch(Exception e) {e.printStackTrace();}
+//		try {
+//			testMap.put("1", registerationDto);
+//			if(testQueue.add(registerationDto)) {
+//				System.out.println("@@@3######################################### "+ "    DATA ADDED");
+//			}
+//			else {
+//				System.out.println("@@@3######################################### "+ "    DATA NOT ADDED");
+//			}
+//			
+//		}catch(Exception e) {e.printStackTrace();}
 		return userRepository.save(user);
 	}
 	
